@@ -183,16 +183,7 @@ class Poption(object):
                 match = True
             else:
                 match = False
-
-            ## Compare matched state
-            if match is True:
-                if self.verbose is True:
-                    print('match true  + {0}'.format(mac))
-                return True
-            else:
-                if self.verbose is True:
-                    print('match false - {0}'.format(mac))
-                return False
+            return match
         except:
             return False
 
