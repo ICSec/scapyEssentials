@@ -180,18 +180,8 @@ class Poption(object):
         try:
             ## Get state
             if pkt[Dot11].addr1 == mac or pkt[Dot11].addr2 == mac or pkt[Dot11].addr3 == mac or pkt[Dot11].addr4 == mac:
-                match = True
-            else:
-                match = False
-
-            ## Compare matched state
-            if match is True:
-                if self.verbose is True:
-                    print('match true  + {0}'.format(mac))
                 return True
             else:
-                if self.verbose is True:
-                    print('match false - {0}'.format(mac))
                 return False
         except:
             return False
@@ -209,6 +199,20 @@ class Poption(object):
         return False
 
 
+    def nthBitSet(self, integer, bit):
+        """Determine if the nth bit is set on a given integer.
+        The first bit is considered the zeroth bit.  stdout is the decimal value
+        of the bit you turn on with this method, it also returns a True.
+        Using the Python bitwise operator for AND, &.
+
+        Give it a number, it will let you know if the binary on the specified
+        bit from right to left is a 1 (True) or a 0 (False).
+        """
+        if integer & (1 << bit):
+            return True
+        return False
+
+
     def symStryngs(self, scpObj, fld, maxInt = 254):
         """Iterator to show the available opcodes for a given scapy object
         Returns a list object by default of 0-253 for the opcode
@@ -218,7 +222,7 @@ class Poption(object):
         scpObj.setfieldval(fld, count)
         strDict = {}
         while count < maxInt:
-            strDict.append({count: self.cv.symString(scpObj, fld)})
+            strDict.update({count: self.cv.symString(scpObj, fld)})
             count += 1
             try:
                 scpObj.setfieldval(fld, count)
